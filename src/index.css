@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@import "./assets/fonts/monaco/style.css";
+
+:root { color-scheme: light; }
+html { scroll-behavior: smooth; }
+
+/* Base gradient + text color per your spec */
+body { 
+    @apply bg-gradient-to-br from-neutral-50 via-neutral-50 to-slate-100 text-neutral-950; 
+    font-family: 'Monaco', sans-serif;
+}
+
+/* Utility for focus rings */
+.focus-ring { @apply outline-none ring-2 ring-neutral-300; }
