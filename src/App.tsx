@@ -106,7 +106,7 @@ export default function Portfolio() {
                   </Link>
                 </div>
               </div>
-              <div className="shrink-0 w-full md:w-56">
+              <div className="shrink-0 w-full md:w-48">
                 <div className="aspect-square rounded-2xl border border-neutral-300 bg-gradient-to-br from-neutral-200 to-neutral-300 grid place-items-center text-5xl font-semibold select-none">AS</div>
               </div>
             </div>
