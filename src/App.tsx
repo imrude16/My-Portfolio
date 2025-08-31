@@ -8,17 +8,17 @@ import Socials from "./components/SocialComponents";
 
 
 const PROFILE = {
-  name: "Akash Singh",
-  role: "Full‑Stack Developer (AIML)",
-  tagline: "I build clean, fast and accessible web apps with a minimalist design philosophy.",
+  name: "Deovrat Singh",
+  role: "Junior Web Developer",
+  tagline: "I am a motivated learner passionate about building modern web applications with clean design and efficient development practices.",
   location: "India (Remote)",
 };
 
 const SOCIALS = [
-  { name: "LinkedIn", href: "https://linkedin.com/in/your-handle", icon: <SiLinkedin className="size-5 flex-shrink-0" />, brand: "#0A66C2" },
-  { name: "GitHub", href: "https://github.com/your-handle", icon: <SiGithub className="size-5 flex-shrink-0" />, brand: "#24292F" },
-  { name: "Twitter", href: "https://x.com/your-handle", icon: <SiX className="size-5 flex-shrink-0" />, brand: "#000000" },
-  { name: "Discord", href: "https://discord.com/users/your-handle", icon: <SiDiscord className="size-5 flex-shrink-0" />, brand: "#5865F2" },
+  { name: "LinkedIn", href: "https://www.linkedin.com/in/deovrat-singh-a17a31253", icon: <SiLinkedin className="size-5 flex-shrink-0" />, brand: "#0A66C2" },
+  { name: "GitHub", href: "https://github.com/imrude16", icon: <SiGithub className="size-5 flex-shrink-0" />, brand: "#24292F" },
+  { name: "Twitter", href: "https://x.com/Deovrat2003", icon: <SiX className="size-5 flex-shrink-0" />, brand: "#000000" },
+  { name: "Discord", href: "https://discord.com/users/571316433393287188", icon: <SiDiscord className="size-5 flex-shrink-0" />, brand: "#5865F2" },
 ];
 
 const TECH = [
@@ -37,9 +37,27 @@ const TECH = [
 ];
 
 const PROJECTS = [
-  { title: "F1 Streetwear — Minimal e‑commerce", desc: "A dark, neon‑accent storefront built in React + Tailwind with cart, auth and Google Sheets CMS.", stack: ["React", "Tailwind", "Vite"], link: "https://example.com", repo: "https://github.com/your-handle/f1-store" },
-  { title: "Query Autocomplete", desc: "Top‑k prefix autocomplete engine using trie + frequency scoring, debounced UX and tests.", stack: ["TypeScript", "Node", "Vitest"], link: "https://example.com", repo: "https://github.com/your-handle/autocomplete" },
-  { title: "3D Portfolio", desc: "Three.js powered portfolio with GSAP micro‑interactions and accessible keyboard nav.", stack: ["React", "Three.js", "GSAP"], link: "https://example.com", repo: "https://github.com/your-handle/3d-portfolio" },
+  { 
+    title: "3D Portfolio Website", 
+    desc: "A fully responsive portfolio with Three.js 3D models, GSAP animations, and modern UI design for seamless user experience.", 
+    stack: ["React", "Three.js", "GSAP", "Tailwind"], 
+    link: "https://myfolio-dev.vercel.app/", 
+    repo: "https://github.com/imrude16/3d-portfolio-using-react" 
+  },
+  { 
+    title: "AI Resume Analyzer", 
+    desc: "AI-powered tool that evaluates resumes against job descriptions with ATS compatibility checks, keyword matching, and visual scoring.", 
+    stack: ["React", "TypeScript", "Tailwind"], 
+    link: "https://resumiind.vercel.app/", 
+    repo: "https://github.com/imrude16/ai-resume-analyzer" 
+  },
+  { 
+    title: "AI Chat Application", 
+    desc: "Specialized AI chat app with session persistence, contextual memory, and secure authentication for task-specific conversations.", 
+    stack: ["React", "TypeScript", "Express"], 
+    link: "### (In Development)", 
+    repo: "https://github.com/imrude16/ai-chat-app" 
+  },
 ];
 
 const EXPERIENCE = [
@@ -75,7 +93,7 @@ export default function Portfolio() {
       <header id="site-header" className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-white/60 bg-white/50 border-b border-neutral-200">
         <nav className="max-w-6xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between">
           <Link to="#hero" className="font-bold tracking-tight text-neutral-950 flex items-center gap-2">
-            <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-neutral-900 text-neutral-50">AS</span>
+            <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-neutral-900 text-neutral-50">DS</span>
             <span>Portfolio</span>
           </Link>
           <div className="hidden sm:flex items-center gap-3">
@@ -107,7 +125,7 @@ export default function Portfolio() {
                 </div>
               </div>
               <div className="shrink-0 w-full md:w-48">
-                <div className="aspect-square rounded-2xl border border-neutral-300 bg-gradient-to-br from-neutral-200 to-neutral-300 grid place-items-center text-5xl font-semibold select-none">AS</div>
+                <div className="aspect-square rounded-2xl border border-neutral-300 bg-gradient-to-br from-neutral-200 to-neutral-300 grid place-items-center text-5xl font-semibold select-none">DS</div>
               </div>
             </div>
           </SectionCard>
@@ -123,16 +141,15 @@ export default function Portfolio() {
           <SectionCard id="about" title="About" icon={<Wrench className="size-5" />}>
             <div className="grid md:grid-cols-2 gap-6">
               <p className="text-neutral-700 leading-relaxed">
-                I’m a developer focused on building pragmatic, scalable interfaces. I love
-                modular grid systems, clear hierarchy, and small touches of motion that guide
-                attention without distracting. My tool‑belt is React, TypeScript and Tailwind;
-                I’m comfortable across the stack with Node/Express and databases.
+                I'm a motivated B.Tech student in AI & Machine Learning with a passion for web development and modern technologies. 
+                I focus on building responsive, user-friendly applications with clean design principles and efficient problem-solving approaches. 
+                Currently pursuing my degree while actively working on projects that combine my interests in AI and web development.
               </p>
               <ul className="text-neutral-700 space-y-2">
-                <li>• Accessible, semantic HTML with keyboard‑first UX.</li>
-                <li>• Component‑driven architecture and documentation.</li>
-                <li>• Performance budgets, code‑splitting, and profiling.</li>
-                <li>• CI/CD, tests, and maintainable DX.</li>
+                <li>• AI-powered web applications with modern frameworks.</li>
+                <li>• Responsive design with accessibility considerations.</li>
+                <li>• Clean code practices and collaborative development.</li>
+                <li>• Continuous learning and technology adaptation.</li>
               </ul>
             </div>
           </SectionCard>
@@ -198,7 +215,7 @@ export default function Portfolio() {
         {/* Footer / Contact */}
         <motion.div {...fade} className="md:col-span-12">
           <SectionCard id="contact" title="Contact" icon={<Mail className="size-5" />}>
-            <form onSubmit={(e) => { e.preventDefault(); const fd = new FormData(e.currentTarget); const name = fd.get("name"); const email = fd.get("email"); const message = fd.get("message"); const mailto = `mailto:you@example.com?subject=Portfolio%20Contact%20from%20${encodeURIComponent(String(name))}&body=${encodeURIComponent(`From: ${email}\n\n${message}`)}`; window.location.href = mailto; }} className="grid md:grid-cols-2 gap-4">
+            <form onSubmit={(e) => { e.preventDefault(); const fd = new FormData(e.currentTarget); const name = fd.get("name"); const email = fd.get("email"); const message = fd.get("message"); const mailto = `mailto:akashsingh08454@gmail.com?subject=Portfolio%20Contact%20from%20${encodeURIComponent(String(name))}&body=${encodeURIComponent(`From: ${email}\n\n${message}`)}`; window.location.href = mailto; }} className="grid md:grid-cols-2 gap-4">
               <div className="grid gap-2">
                 <label htmlFor="name" className="text-sm text-neutral-700">Name</label>
                 <input id="name" name="name" required placeholder="Your name" className="px-3 py-2 rounded-xl border border-neutral-300 bg-white/70 outline-none focus:ring-2 focus:ring-neutral-300" />
@@ -212,7 +229,7 @@ export default function Portfolio() {
                 <textarea id="message" name="message" rows={5} required placeholder="Tell me about your project…" className="px-3 py-2 rounded-xl border border-neutral-300 bg-white/70 outline-none focus:ring-2 focus:ring-neutral-300" />
               </div>
               <div className="md:col-span-2 flex items-center justify-between">
-                <p className="text-sm text-neutral-600">Or email directly: <a className="text-blue-600 hover:underline" href="mailto:you@example.com">you@example.com</a></p>
+                <p className="text-sm text-neutral-600">Or email directly: <a className="text-blue-600 hover:underline" href="mailto:akashsingh08454@gmail.com">akashsingh08454@gmail.com</a></p>
                 <button type="submit" className="px-4 py-2 rounded-xl border border-neutral-300 bg-neutral-950 text-neutral-50 hover:opacity-90">Send <ArrowUpRight className="inline-block size-4 ml-1" /></button>
               </div>
             </form>
