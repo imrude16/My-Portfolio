@@ -5,12 +5,13 @@ import { SiReact, SiNextdotjs, SiTailwindcss, SiJavascript, SiTypescript, SiNode
 import SectionCard from "./components/SectionCard";
 import { Link, useLocation } from "react-router-dom";
 import Socials from "./components/SocialComponents";
-
+import MyImage from "./assets/images/MyImage.jpg";
 
 const PROFILE = {
   name: "Deovrat Singh",
+  avatar: MyImage,
   role: "Junior Web Developer",
-  tagline: "I am a motivated learner passionate about building modern web applications with clean design and efficient development practices.",
+  tagline: "I build clean, fast and accessible web apps with a minimalist design approach, specialized in React-based solutions and component-driven architecture.",
   location: "India (Remote)",
 };
 
@@ -37,26 +38,26 @@ const TECH = [
 ];
 
 const PROJECTS = [
-  { 
-    title: "3D Portfolio Website", 
-    desc: "A fully responsive portfolio with Three.js 3D models, GSAP animations, and modern UI design for seamless user experience.", 
-    stack: ["React", "Three.js", "GSAP", "Tailwind"], 
-    link: "https://myfolio-dev.vercel.app/", 
-    repo: "https://github.com/imrude16/3d-portfolio-using-react" 
+  {
+    title: "3D Portfolio Website",
+    desc: "A fully responsive portfolio with Three.js 3D models, GSAP animations, and modern UI design for seamless user experience.",
+    stack: ["React", "Three.js", "GSAP", "Tailwind"],
+    link: "https://myfolio-dev.vercel.app/",
+    repo: "https://github.com/imrude16/3d-portfolio-using-react"
   },
-  { 
-    title: "AI Resume Analyzer", 
-    desc: "AI-powered tool that evaluates resumes against job descriptions with ATS compatibility checks, keyword matching, and visual scoring.", 
-    stack: ["React", "TypeScript", "Tailwind"], 
-    link: "https://resumiind.vercel.app/", 
-    repo: "https://github.com/imrude16/ai-resume-analyzer" 
+  {
+    title: "AI Resume Analyzer",
+    desc: "AI-powered tool that evaluates resumes against job descriptions with ATS compatibility checks, keyword matching, and visual scoring.",
+    stack: ["React", "TypeScript", "Tailwind"],
+    link: "https://resumiind.vercel.app/",
+    repo: "https://github.com/imrude16/ai-resume-analyzer"
   },
-  { 
-    title: "AI Chat Application", 
-    desc: "Specialized AI chat app with session persistence, contextual memory, and secure authentication for task-specific conversations.", 
-    stack: ["React", "TypeScript", "Express"], 
-    link: "### (In Development)", 
-    repo: "https://github.com/imrude16/ai-chat-app" 
+  {
+    title: "AI Chat Application",
+    desc: "Specialized AI chat app with session persistence, contextual memory, and secure authentication for task-specific conversations.",
+    stack: ["React", "TypeScript", "Express"],
+    link: "### (In Development)",
+    repo: "https://github.com/imrude16/ai-chat-app"
   },
 ];
 
@@ -125,7 +126,13 @@ export default function Portfolio() {
                 </div>
               </div>
               <div className="shrink-0 w-full md:w-48">
-                <div className="aspect-square rounded-2xl border border-neutral-300 bg-gradient-to-br from-neutral-200 to-neutral-300 grid place-items-center text-5xl font-semibold select-none">DS</div>
+                <div className="aspect-square rounded-2xl border border-neutral-300 bg-gradient-to-br from-neutral-200 to-neutral-300 p-2">
+                  <img
+                    src={PROFILE.avatar}
+                    alt="Deovrat Singh"
+                    className="w-full h-full object-cover rounded-xl"
+                  />
+                </div>
               </div>
             </div>
           </SectionCard>
@@ -141,8 +148,8 @@ export default function Portfolio() {
           <SectionCard id="about" title="About" icon={<Wrench className="size-5" />}>
             <div className="grid md:grid-cols-2 gap-6">
               <p className="text-neutral-700 leading-relaxed">
-                I'm a motivated B.Tech student in AI & Machine Learning with a passion for web development and modern technologies. 
-                I focus on building responsive, user-friendly applications with clean design principles and efficient problem-solving approaches. 
+                I'm B.Tech student with a passion for web development and modern technologies.
+                I focus on building responsive, user-friendly applications with clean design principles and efficient problem-solving approaches.
                 Currently pursuing my degree while actively working on projects that combine my interests in AI and web development.
               </p>
               <ul className="text-neutral-700 space-y-2">
