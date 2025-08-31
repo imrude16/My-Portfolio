@@ -237,7 +237,9 @@ export default function Portfolio() {
               </div>
               <div className="md:col-span-2 flex items-center justify-between">
                 <p className="text-sm text-neutral-600">Or email directly: <a className="text-blue-600 hover:underline" href="mailto:akashsingh08454@gmail.com">akashsingh08454@gmail.com</a></p>
-                <button type="submit" className="px-4 py-2 rounded-xl border border-neutral-300 bg-neutral-950 text-neutral-50 hover:opacity-90">Send <ArrowUpRight className="inline-block size-4 ml-1" /></button>
+                <button type="submit" className="px-4 py-2 rounded-xl border border-neutral-300 bg-neutral-950 text-neutral-50 hover:opacity-90 flex items-center gap-1 whitespace-nowrap">
+                  Send <ArrowUpRight className="size-4 flex-shrink-0" />
+                </button>
               </div>
             </form>
             <div className="mt-6 pt-6 border-t border-neutral-200 text-xs text-neutral-500">© {new Date().getFullYear()} {PROFILE.name}. All rights reserved.</div>
