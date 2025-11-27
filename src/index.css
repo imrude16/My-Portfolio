@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surfaceHighlight: var(--surface-highlight);
+  --color-textPrimary: var(--text-primary);
+  --color-textSecondary: var(--text-secondary);
+  --color-borderColor: var(--border);
+  --color-primary: var(--primary);
+}
+
+/* Base Variables */
+:root {
+  --background: #050505;
+  --surface: #0a0a0a;
+  --surface-highlight: #121212;
+  --text-primary: #f8fafc; /* slate-50 */
+  --text-secondary: #94a3b8; /* slate-400 */
+  --border: #1e293b; /* slate-800 */
+  --primary: #2563eb; /* blue-600 */
+}
+
+/* Light Mode Overrides */
+:root.light-mode {
+  --background: #ffffff;
+  --surface: #f8fafc;
+  --surface-highlight: #e2e8f0;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --border: #cbd5e1;
+  --primary: #2563eb;
+}
+
+/* Global Styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: var(--font-sans);
+}
+
+/* Utilities */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
