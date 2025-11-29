@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, ExternalLink, Github } from 'lucide-react';
 import type { Project } from '../types';
@@ -34,7 +34,7 @@ const projects: Project[] = [
     liveLink: 'https://example.com',
     githubLink: 'https://github.com'
   },
-    {
+  {
     id: '4',
     title: 'TaskFlow',
     description: 'Collaborative project management tool for remote teams.',
@@ -46,25 +46,146 @@ const projects: Project[] = [
   }
 ];
 
+// --- Optimized Video Card Component ---
+interface ProjectCardProps {
+  project: Project;
+  onClick: () => void;
+}
+
+const ProjectCard = React.memo<ProjectCardProps>(({ project, onClick }) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [, setIsInView] = useState(false);
+  const [videoError, setVideoError] = useState(false);
+
+  useEffect(() => {
+    const videoElement = videoRef.current;
+    if (!videoElement) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+        
+        if (entry.isIntersecting) {
+          videoElement.play().catch(() => setVideoError(true));
+        } else {
+          videoElement.pause();
+        }
+      },
+      { threshold: 0.25, rootMargin: '50px' }
+    );
+
+    observer.observe(videoElement);
+
+    return () => {
+      observer.disconnect();
+      videoElement.pause();
+    };
+  }, []);
+
+  return (
+    <motion.div
+      className="relative min-w-[350px] md:min-w-[500px] h-[300px] md:h-[400px] bg-black border border-borderColor group overflow-hidden"
+      whileHover={{ scale: 1.02, borderColor: 'var(--primary)' }}
+      transition={{ duration: 0.3 }}
+      onClick={onClick}
+    >
+      {/* Video Background with Error Handling */}
+      {!videoError ? (
+        <video
+          ref={videoRef}
+          src={project.videoUrl}
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity duration-500"
+          onError={() => setVideoError(true)}
+        />
+      ) : (
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent flex items-center justify-center">
+          <p className="text-textSecondary text-sm">Preview Unavailable</p>
+        </div>
+      )}
+      
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+      
+      {/* Content Overlay */}
+      <div className="absolute bottom-0 left-0 w-full p-6">
+        <div className="flex gap-2 mb-3">
+          {project.techStack.slice(0, 3).map(tech => (
+            <span 
+              key={tech} 
+              className="text-[10px] uppercase font-bold px-2 py-1 bg-primary/20 text-white border border-primary/50 backdrop-blur-sm"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+        <h3 className="text-2xl font-bold text-white mb-1">{project.title}</h3>
+        <p className="text-slate-300 text-sm line-clamp-2">{project.description}</p>
+        
+        <div className="mt-4 flex items-center text-primary text-sm font-mono opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0 duration-300">
+          <span>VIEW DETAILS</span>
+          <span className="ml-2" aria-hidden="true">→</span>
+        </div>
+      </div>
+    </motion.div>
+  );
+});
+
+ProjectCard.displayName = 'ProjectCard';
+
+// --- Main Projects Component ---
 const Projects: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [width, setWidth] = useState(0);
+  const [dragWidth, setDragWidth] = useState(0);
 
+  // Optimized width calculation with ResizeObserver
   useEffect(() => {
-    if (containerRef.current) {
-      setWidth(containerRef.current.scrollWidth - containerRef.current.offsetWidth);
-    }
+    const container = containerRef.current;
+    if (!container) return;
+
+    const calculateWidth = () => {
+      const scrollWidth = container.scrollWidth;
+      const offsetWidth = container.offsetWidth;
+      setDragWidth(scrollWidth - offsetWidth);
+    };
+
+    calculateWidth();
+
+    const resizeObserver = new ResizeObserver(calculateWidth);
+    resizeObserver.observe(container);
+
+    return () => resizeObserver.disconnect();
+  }, []);
+
+  // Optimized modal handlers
+  const openModal = useCallback((project: Project) => {
+    setSelectedProject(project);
+    document.body.style.overflow = 'hidden';
+  }, []);
+
+  const closeModal = useCallback(() => {
+    setSelectedProject(null);
+    document.body.style.overflow = 'unset';
+  }, []);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
   }, []);
 
   return (
     <section className="w-full py-20 bg-surface overflow-hidden">
-       <div className="max-w-7xl mx-auto px-6 mb-12">
-         <div className="border-l-2 border-primary pl-4">
-            <h2 className="text-3xl font-bold text-textPrimary tracking-tight">SELECTED PROJECTS</h2>
-            <p className="text-textSecondary font-mono text-sm mt-1">DRAG TO EXPLORE</p>
-          </div>
-       </div>
+      <div className="max-w-7xl mx-auto px-6 mb-12">
+        <div className="border-l-2 border-primary pl-4">
+          <h2 className="text-3xl font-bold text-textPrimary tracking-tight">SELECTED PROJECTS</h2>
+          <p className="text-textSecondary font-mono text-sm mt-1">DRAG TO EXPLORE</p>
+        </div>
+      </div>
 
       <motion.div 
         ref={containerRef} 
@@ -72,118 +193,109 @@ const Projects: React.FC = () => {
       >
         <motion.div 
           drag="x" 
-          dragConstraints={{ right: 0, left: -width }}
+          dragConstraints={{ right: 0, left: -dragWidth }}
+          dragElastic={0.1}
+          dragTransition={{ bounceStiffness: 300, bounceDamping: 30 }}
           className="flex gap-8"
         >
           {projects.map((project) => (
-            <motion.div
+            <ProjectCard
               key={project.id}
-              className="relative min-w-[350px] md:min-w-[500px] h-[300px] md:h-[400px] bg-black border border-borderColor group overflow-hidden"
-              whileHover={{ scale: 1.02, borderColor: 'var(--primary)' }}
-              transition={{ duration: 0.3 }}
-              onClick={() => setSelectedProject(project)}
-            >
-              {/* Video Background */}
-              <video 
-                src={project.videoUrl} 
-                muted 
-                loop 
-                autoPlay 
-                playsInline
-                className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
-              
-              {/* Content Overlay */}
-              <div className="absolute bottom-0 left-0 w-full p-6">
-                <div className="flex gap-2 mb-3">
-                  {project.techStack.slice(0, 3).map(tech => (
-                    <span key={tech} className="text-[10px] uppercase font-bold px-2 py-1 bg-primary/20 text-white border border-primary/50 backdrop-blur-sm">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-1">{project.title}</h3>
-                <p className="text-slate-300 text-sm line-clamp-2">{project.description}</p>
-                
-                <div className="mt-4 flex items-center text-primary text-sm font-mono opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0 duration-300">
-                  <span>VIEW DETAILS</span>
-                  <span className="ml-2">→</span>
-                </div>
-              </div>
-            </motion.div>
+              project={project}
+              onClick={() => openModal(project)}
+            />
           ))}
         </motion.div>
       </motion.div>
 
-      {/* Modal */}
+      {/* Optimized Modal */}
       <AnimatePresence>
         {selectedProject && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
             className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
-            onClick={() => setSelectedProject(null)}
+            onClick={closeModal}
           >
             <motion.div
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
               className="bg-surfaceHighlight w-full max-w-4xl max-h-[90vh] overflow-y-auto border border-borderColor shadow-2xl relative"
               onClick={(e) => e.stopPropagation()}
             >
               <button 
-                onClick={() => setSelectedProject(null)}
+                onClick={closeModal}
                 className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-red-500/80 text-white transition-colors"
+                aria-label="Close modal"
               >
                 <X size={20} />
               </button>
 
               <div className="grid md:grid-cols-2">
-                 <div className="h-[300px] md:h-full bg-black relative">
-                    <video 
-                      src={selectedProject.videoUrl} 
-                      muted 
-                      loop 
-                      autoPlay 
-                      playsInline
-                      className="absolute inset-0 w-full h-full object-cover"
-                    />
-                 </div>
+                <div className="h-[300px] md:h-full bg-black relative">
+                  <video 
+                    src={selectedProject.videoUrl} 
+                    muted 
+                    loop 
+                    autoPlay 
+                    playsInline
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                </div>
                  
-                 <div className="p-8 flex flex-col">
-                    <h2 className="text-3xl font-bold text-textPrimary mb-2">{selectedProject.title}</h2>
-                    <p className="text-primary font-mono text-sm mb-6">PROJECT SHOWCASE</p>
-                    
-                    <p className="text-textSecondary leading-relaxed mb-6">
-                      {selectedProject.fullDescription}
-                    </p>
+                <div className="p-8 flex flex-col">
+                  <h2 className="text-3xl font-bold text-textPrimary mb-2">
+                    {selectedProject.title}
+                  </h2>
+                  <p className="text-primary font-mono text-sm mb-6">PROJECT SHOWCASE</p>
+                  
+                  <p className="text-textSecondary leading-relaxed mb-6">
+                    {selectedProject.fullDescription}
+                  </p>
 
-                    <div className="mb-8">
-                      <h4 className="text-sm font-bold text-textPrimary mb-3 uppercase tracking-wider">Tech Stack</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {selectedProject.techStack.map(tech => (
-                          <span key={tech} className="text-xs font-mono text-textSecondary px-3 py-1 bg-background border border-borderColor">
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
+                  <div className="mb-8">
+                    <h4 className="text-sm font-bold text-textPrimary mb-3 uppercase tracking-wider">
+                      Tech Stack
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedProject.techStack.map(tech => (
+                        <span 
+                          key={tech} 
+                          className="text-xs font-mono text-textSecondary px-3 py-1 bg-background border border-borderColor"
+                        >
+                          {tech}
+                        </span>
+                      ))}
                     </div>
+                  </div>
 
-                    <div className="mt-auto flex gap-4">
-                      {selectedProject.liveLink && (
-                        <a href={selectedProject.liveLink} target="_blank" rel="noreferrer" className="flex-1 flex items-center justify-center gap-2 bg-primary hover:bg-blue-700 text-white py-3 font-bold transition-colors">
-                          <ExternalLink size={18} /> LIVE DEMO
-                        </a>
-                      )}
-                      {selectedProject.githubLink && (
-                        <a href={selectedProject.githubLink} target="_blank" rel="noreferrer" className="flex-1 flex items-center justify-center gap-2 bg-background border border-borderColor hover:border-textPrimary text-textPrimary py-3 font-bold transition-colors">
-                          <Github size={18} /> CODE
-                        </a>
-                      )}
-                    </div>
-                 </div>
+                  <div className="mt-auto flex gap-4">
+                    {selectedProject.liveLink && (
+                      <a 
+                        href={selectedProject.liveLink} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="flex-1 flex items-center justify-center gap-2 bg-primary hover:bg-blue-700 text-white py-3 font-bold transition-colors"
+                      >
+                        <ExternalLink size={18} /> LIVE DEMO
+                      </a>
+                    )}
+                    {selectedProject.githubLink && (
+                      <a 
+                        href={selectedProject.githubLink} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="flex-1 flex items-center justify-center gap-2 bg-background border border-borderColor hover:border-textPrimary text-textPrimary py-3 font-bold transition-colors"
+                      >
+                        <Github size={18} /> CODE
+                      </a>
+                    )}
+                  </div>
+                </div>
               </div>
             </motion.div>
           </motion.div>

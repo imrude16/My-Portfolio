@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
-import { Terminal, Cpu, Code2, Play } from 'lucide-react';
+import { Terminal, Code2, Play } from 'lucide-react';
 
 const CodeWindow = () => {
-  const [code, setCode] = useState('');
+  const [ , setCode] = useState('');
+  const [hasTyped, setHasTyped] = useState(false);
+  
   const fullCode = `const Developer = {
   name: "Full Stack Engineer",
   skills: [
@@ -21,14 +23,21 @@ const CodeWindow = () => {
 };`;
 
   useEffect(() => {
+    // Only type once
+    if (hasTyped) return;
+    
     let i = 0;
     const interval = setInterval(() => {
       setCode(fullCode.slice(0, i));
       i++;
-      if (i > fullCode.length) clearInterval(interval);
+      if (i > fullCode.length) {
+        clearInterval(interval);
+        setHasTyped(true);
+      }
     }, 30);
+    
     return () => clearInterval(interval);
-  }, []);
+  }, [hasTyped, fullCode]);
 
   return (
     <motion.div 
@@ -104,6 +113,7 @@ const CodeWindow = () => {
 
 const Hero: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animationFrameRef = useRef<number>(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -119,11 +129,11 @@ const Hero: React.FC = () => {
     let offset = 0;
 
     const drawGrid = () => {
-        // Clear with transparent bg (handled by CSS)
+        // Clear with transparent bg
         ctx.clearRect(0, 0, width, height);
         
-        // Detect dark/light mode via computed style or just use generic alpha black/white
-        const isDark = document.documentElement.classList.contains('light-mode') === false;
+        // Detect theme dynamically
+        const isDark = !document.documentElement.classList.contains('light-mode');
         
         ctx.strokeStyle = isDark ? '#222' : '#e5e5e5';
         ctx.lineWidth = 1;
@@ -160,7 +170,7 @@ const Hero: React.FC = () => {
 
     const animate = () => {
         drawGrid();
-        requestAnimationFrame(animate);
+        animationFrameRef.current = requestAnimationFrame(animate);
     }
     
     const handleResize = () => {
@@ -173,8 +183,12 @@ const Hero: React.FC = () => {
 
     return () => {
       window.removeEventListener('resize', handleResize);
+      // Properly cancel animation frame
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
     };
-  }, []);
+  }, []); // Empty deps - only run once
 
   return (
     <section id="home" className="relative w-full min-h-screen flex items-center justify-center overflow-hidden border-b border-borderColor pt-20 pb-10 md:py-0 bg-background">
@@ -240,10 +254,11 @@ const Hero: React.FC = () => {
         </div>
       </div>
       
+      {/* Scroll Indicator - Will auto-pause when out of view */}
       <div className="absolute bottom-10 left-0 w-full flex justify-center">
         <motion.div 
             animate={{ y: [0, 10, 0] }}
-            transition={{ repeat: Infinity, duration: 2 }}
+            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
             className="text-textSecondary flex flex-col items-center gap-2"
         >
             <span className="text-[10px] tracking-widest uppercase">Scroll</span>
@@ -254,4 +269,4 @@ const Hero: React.FC = () => {
   );
 };
 
-export default Hero;
+export default Hero

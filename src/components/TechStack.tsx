@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { memo } from 'react';
+import { motion } from 'motion/react'; 
 import { 
   ReactIcon, TailwindIcon, NextJsIcon, NodeIcon, ViteIcon, 
   JavaScriptIcon, TypeScriptIcon, MongoIcon, GitIcon, PostmanIcon, ExpressIcon, TerminalIcon 
@@ -20,6 +20,31 @@ const technologies = [
   { name: 'Terminal', icon: TerminalIcon, category: 'Tools' },
 ];
 
+// Memoize individual tech card to prevent unnecessary re-renders
+const TechCard = memo(({ tech, index }: { tech: typeof technologies[0]; index: number }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ delay: index * 0.05 }}
+    viewport={{ once: true }}
+    whileHover={{ scale: 1.05 }}
+    className="relative group h-32 bg-background border border-borderColor hover:border-primary transition-colors duration-300 flex flex-col items-center justify-center gap-3"
+  >
+    <div className="text-textSecondary group-hover:scale-110 transition-transform duration-300">
+      {/* ✅ FIX: Wrap icon in div with fixed dimensions to prevent layout shift */}
+      <div className="w-10 h-10 flex items-center justify-center">
+        <tech.icon className="w-full h-full" />
+      </div>
+    </div>
+    <div className="text-center">
+      <p className="text-sm font-bold text-textPrimary group-hover:text-textPrimary">{tech.name}</p>
+      <p className="text-[10px] uppercase tracking-wider text-textSecondary group-hover:text-primary/70">{tech.category}</p>
+    </div>
+  </motion.div>
+));
+
+TechCard.displayName = 'TechCard';
+
 const TechStack: React.FC = () => {
   return (
     <section className="w-full py-20 bg-surface">
@@ -31,23 +56,7 @@ const TechStack: React.FC = () => {
 
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
           {technologies.map((tech, i) => (
-            <motion.div
-              key={tech.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.05 }}
-              viewport={{ once: true }}
-              className="relative group h-32 bg-background border border-borderColor hover:border-primary transition-colors duration-300 flex flex-col items-center justify-center gap-3"
-            >
-              <div className="text-textSecondary group-hover:scale-110 transition-transform duration-300">
-                {/* Icons now have their own internal coloring */}
-                <tech.icon className="w-8 h-8 md:w-10 md:h-10" />
-              </div>
-              <div className="text-center">
-                <p className="text-sm font-bold text-textPrimary group-hover:text-textPrimary">{tech.name}</p>
-                <p className="text-[10px] uppercase tracking-wider text-textSecondary group-hover:text-primary/70">{tech.category}</p>
-              </div>
-            </motion.div>
+            <TechCard key={tech.name} tech={tech} index={i} />
           ))}
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react'; 
 import { GithubIcon, LinkedinIcon, XIcon, DiscordIcon } from './Icons';
 
 const socials = [
@@ -49,6 +49,9 @@ const Socials: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="group relative bg-background p-8 flex flex-col items-center justify-center gap-4 transition-all duration-300 hover:bg-surfaceHighlight"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              aria-label={`Visit ${social.name} profile`}
             >
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 border border-borderColor group-hover:border-opacity-50 pointer-events-none transition-opacity duration-300" />
               

@@ -18,10 +18,10 @@
   --background: #050505;
   --surface: #0a0a0a;
   --surface-highlight: #121212;
-  --text-primary: #f8fafc; /* slate-50 */
-  --text-secondary: #94a3b8; /* slate-400 */
-  --border: #1e293b; /* slate-800 */
-  --primary: #2563eb; /* blue-600 */
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --border: #1e293b;
+  --primary: #2563eb;
 }
 
 /* Light Mode Overrides */
@@ -47,6 +47,24 @@ body {
   font-family: var(--font-sans);
 }
 
+/* Accessibility: Focus Styles */
+*:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* Utilities */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
@@ -55,3 +73,4 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+

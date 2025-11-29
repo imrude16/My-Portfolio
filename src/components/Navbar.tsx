@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Github, Sun, Moon, Menu, X } from 'lucide-react';
 
@@ -19,16 +19,45 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, isDarkMode }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close mobile menu on escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isMobileMenuOpen) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+    
+    if (isMobileMenuOpen) {
+      document.addEventListener('keydown', handleEscape);
+      // Prevent body scroll when menu is open
+      document.body.style.overflow = 'hidden';
+    }
+    
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMobileMenuOpen]);
+
   const scrollToSection = (id: string) => {
+    setIsMobileMenuOpen(false); // Always close menu first
+    
     if (id === 'home') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       const element = document.getElementById(id);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        // Offset for fixed navbar (64px = h-16)
+        const offset = 64;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
       }
     }
-    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -46,6 +75,7 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, isDarkMode }) => {
           <button 
             onClick={() => scrollToSection('home')}
             className="text-xl font-bold tracking-tighter hover:text-primary transition-colors font-mono"
+            aria-label="Go to home"
           >
             DEV.FOLIO
           </button>
@@ -63,6 +93,7 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, isDarkMode }) => {
               target="_blank" 
               rel="noopener noreferrer"
               className="text-sm font-medium hover:text-primary transition-colors flex items-center gap-2"
+              aria-label="GitHub Profile"
             >
               GITHUB <Github size={14} />
             </a>
@@ -78,7 +109,7 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, isDarkMode }) => {
             <button 
               onClick={toggleTheme}
               className="p-2 rounded-full hover:bg-surfaceHighlight transition-colors"
-              aria-label="Toggle Theme"
+              aria-label={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
             >
               {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
             </button>
@@ -89,10 +120,14 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, isDarkMode }) => {
             <button 
               onClick={toggleTheme}
               className="p-2 rounded-full hover:bg-surfaceHighlight transition-colors"
+              aria-label={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
             >
               {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
             </button>
-            <button onClick={() => setIsMobileMenuOpen(true)}>
+            <button 
+              onClick={() => setIsMobileMenuOpen(true)}
+              aria-label="Open menu"
+            >
               <Menu size={24} />
             </button>
           </div>
@@ -108,17 +143,21 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, isDarkMode }) => {
             exit={{ opacity: 0, x: '100%' }}
             transition={{ type: "tween" }}
             className="fixed inset-0 z-[60] bg-background flex flex-col items-center justify-center gap-8 md:hidden"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile navigation menu"
           >
             <button 
               onClick={() => setIsMobileMenuOpen(false)}
               className="absolute top-6 right-6 p-2 hover:bg-surfaceHighlight rounded-full"
+              aria-label="Close menu"
             >
               <X size={24} />
             </button>
             
             <button 
               onClick={() => scrollToSection('home')}
-              className="text-2xl font-bold hover:text-primary"
+              className="text-2xl font-bold hover:text-primary transition-colors"
             >
               PORTFOLIO
             </button>
@@ -126,13 +165,14 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, isDarkMode }) => {
               href="https://github.com" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-2xl font-bold hover:text-primary flex items-center gap-2"
+              className="text-2xl font-bold hover:text-primary transition-colors flex items-center gap-2"
+              onClick={() => setIsMobileMenuOpen(false)}
             >
               GITHUB <Github size={24} />
             </a>
             <button 
               onClick={() => scrollToSection('contact')}
-              className="text-2xl font-bold hover:text-primary"
+              className="text-2xl font-bold hover:text-primary transition-colors"
             >
               CONTACTS
             </button>
@@ -143,4 +183,5 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, isDarkMode }) => {
   );
 };
 
-export default Navbar;
+// Memoize to prevent re-renders when parent (App) re-renders
+export default memo(Navbar);
