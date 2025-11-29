@@ -1,15 +1,12 @@
 import React, { useCallback, useMemo } from 'react';
 import { Mail, ArrowUp } from 'lucide-react';
 
-// --- Constants ---
-const CONTACT_EMAIL = 'hello@devfolio.com';
+const CONTACT_EMAIL = 'akashsingh08454@gmail.com';
 const PORTFOLIO_NAME = 'DEVFOLIO';
 
 const Footer: React.FC = () => {
-  // Memoized current year
   const currentYear = useMemo(() => new Date().getFullYear(), []);
 
-  // Optimized scroll to top handler
   const scrollToTop = useCallback(() => {
     window.scrollTo({ 
       top: 0, 
@@ -26,7 +23,6 @@ const Footer: React.FC = () => {
     >
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
         
-        {/* Contact Section */}
         <div className="flex flex-col items-center md:items-start">
           <h3 className="text-2xl font-bold text-textPrimary mb-2">
             LET'S CONNECT
@@ -47,7 +43,6 @@ const Footer: React.FC = () => {
           </a>
         </div>
 
-        {/* Back to Top & Copyright Section */}
         <div className="flex flex-col items-center md:items-end gap-4">
           <button 
             onClick={scrollToTop}

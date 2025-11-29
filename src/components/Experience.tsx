@@ -2,7 +2,6 @@ import React from 'react';
 import { motion } from 'motion/react';
 import type { Variants } from 'motion/react';
 
-// --- Optimized Skeleton Visualization ---
 const NetworkSkeleton = React.memo(() => (
   <div className="absolute inset-0 opacity-10 pointer-events-none">
     <svg className="w-full h-full" aria-hidden="true">
@@ -27,7 +26,6 @@ const NetworkSkeleton = React.memo(() => (
 
 NetworkSkeleton.displayName = 'NetworkSkeleton';
 
-// --- Experience Type ---
 interface ExperienceItem {
   role: string;
   company: string;
@@ -35,32 +33,30 @@ interface ExperienceItem {
   description: string;
 }
 
-// --- Experience Data ---
 const experiences: ExperienceItem[] = [
   {
-    role: "Freelance Developer",
-    company: "Self-Employed",
+    role: "Frontend Developer Intern",
+    company: "VaultofCodes",
+    period: "Aug 2025 - Sept 2025",
+    description:
+      "Developed an AI-powered Resume Analyzer using React Router and TypeScript. Built responsive, SEO-optimized interfaces with TailwindCSS and implemented state management with Zustand. Created multiple projects demonstrating modern web development practices.",
+  },
+  {
+    role: "Full Stack Developer",
+    company: "Personal Projects",
     period: "2023 - Present",
     description:
-      "Developing custom websites for small businesses using React and Tailwind CSS. Managing end-to-end delivery from design to deployment.",
+      "Building full-stack applications with React, Node.js, and MongoDB. Focused on AI-integrated solutions, including chat applications and trading platforms. Exploring modern technologies and best practices in web development.",
   },
   {
-    role: "Frontend Developer",
-    company: "Freelance / Contract",
-    period: "2022 - 2023",
+    role: "AI & ML Student",
+    company: "BN College of Engineering",
+    period: "2022 - Present",
     description:
-      "Collaborated on open-source projects. Built responsive UI components and optimized landing page performance.",
-  },
-  {
-    role: "Web Development Student",
-    company: "Personal Projects",
-    period: "2021 - 2022",
-    description:
-      "Intensive self-study and building diverse full-stack applications. Mastered the MERN stack and modern development workflows.",
+      "Pursuing B.Tech in Artificial Intelligence & Machine Learning. Learning modern development workflows, data structures, and algorithms. Participating in hackathons and building projects that combine AI with practical web applications.",
   },
 ];
 
-// --- FIXED Animation Variants with Proper Typing ---
 const cardVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: (i: number) => ({
@@ -79,7 +75,6 @@ const Experience: React.FC = () => {
     <section className="w-full py-20 bg-background border-t border-borderColor">
       <div className="max-w-7xl mx-auto px-6">
 
-        {/* Header */}
         <div className="flex items-end justify-between mb-12">
           <div className="border-l-2 border-primary pl-4">
             <h2 className="text-3xl font-bold text-textPrimary tracking-tight">
@@ -90,7 +85,6 @@ const Experience: React.FC = () => {
           <div className="hidden md:block h-px flex-1 bg-borderColor ml-8 mb-2" />
         </div>
 
-        {/* Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {experiences.map((exp, i) => (
             <motion.div
@@ -104,12 +98,10 @@ const Experience: React.FC = () => {
             >
               <NetworkSkeleton />
 
-              {/* Period Badge */}
               <div className="absolute top-4 right-4 text-xs font-mono text-textSecondary group-hover:text-primary transition-colors z-10">
                 {exp.period}
               </div>
 
-              {/* Text Content */}
               <div className="relative z-10 mt-auto">
                 <h3 className="text-xl font-bold text-textPrimary mb-1 group-hover:text-blue-300 transition-colors">
                   {exp.role}
@@ -122,7 +114,6 @@ const Experience: React.FC = () => {
                 </p>
               </div>
 
-              {/* Progress Bar */}
               <div className="absolute bottom-0 left-0 w-full h-1 bg-borderColor overflow-hidden">
                 <motion.div
                   className="h-full bg-primary"

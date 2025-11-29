@@ -7,19 +7,22 @@ const CodeWindow = () => {
   const [hasTyped, setHasTyped] = useState(false);
   
   const fullCode = `const Developer = {
-  name: "Full Stack Engineer",
-  skills: [
-    "React.js", "Node.js", 
-    "TypeScript", "Cloud"
-  ],
-  passion: "Building Digital Reality",
-  status: "Ready to Collaborate",
+  name: "Deovrat Singh",
+  role: "Full Stack Developer",
+  education: "B.Tech AI & ML",
+  location: "Lucknow, India",
   
-  ship: function() {
-    return this.skills.map(s => 
-      createMagic(s)
-    );
-  }
+  passion: [
+    "Building meaningful solutions",
+    "Learning by doing",
+    "Creative problem-solving"
+  ],
+  
+  approach: function() {
+    return "Curiosity + Purpose + Growth";
+  },
+  
+  status: "Open to opportunities"
 };`;
 
   useEffect(() => {
@@ -55,32 +58,36 @@ const CodeWindow = () => {
         </div>
         <div className="text-textSecondary flex items-center gap-2">
           <Code2 size={12} />
-          <span>portfolio.tsx</span>
+          <span>about.tsx</span>
         </div>
-        <div className="w-10"></div> {/* Spacer */}
+        <div className="w-10"></div>
       </div>
 
       {/* Code Area */}
       <div className="p-6 text-textSecondary min-h-[300px] relative bg-surface">
         <div className="absolute left-0 top-0 bottom-0 w-12 border-r border-borderColor bg-surfaceHighlight flex flex-col items-end pt-6 pr-2 text-textSecondary/50 select-none font-mono text-[10px] leading-6">
-          {Array.from({ length: 12 }).map((_, i) => (
+          {Array.from({ length: 16 }).map((_, i) => (
             <div key={i}>{i + 1}</div>
           ))}
         </div>
         <div className="pl-8 whitespace-pre font-mono leading-6 text-textPrimary">
            <span className="text-pink-500">const</span> <span className="text-blue-400">Developer</span> <span className="text-textSecondary">=</span> {'{'}
-           {'\n'}  <span className="text-purple-400">name:</span> <span className="text-green-400">"Full Stack Engineer"</span>,
-           {'\n'}  <span className="text-purple-400">skills:</span> [
-           {'\n'}    <span className="text-green-400">"React.js"</span>, <span className="text-green-400">"Node.js"</span>, 
-           {'\n'}    <span className="text-green-400">"TypeScript"</span>, <span className="text-green-400">"Cloud"</span>
-           {'\n'}  ],
-           {'\n'}  <span className="text-purple-400">passion:</span> <span className="text-green-400">"Building Digital Reality"</span>,
+           {'\n'}  <span className="text-purple-400">name:</span> <span className="text-green-400">"Deovrat Singh"</span>,
+           {'\n'}  <span className="text-purple-400">role:</span> <span className="text-green-400">"Full Stack Developer"</span>,
+           {'\n'}  <span className="text-purple-400">education:</span> <span className="text-green-400">"B.Tech AI & ML"</span>,
+           {'\n'}  <span className="text-purple-400">location:</span> <span className="text-green-400">"Lucknow, India"</span>,
            {'\n'}  
-           {'\n'}  <span className="text-blue-400">ship:</span> <span className="text-pink-500">function</span>() {'{'}
-           {'\n'}    <span className="text-pink-500">return</span> <span className="text-yellow-500">this</span>.<span className="text-blue-400">skills</span>.<span className="text-blue-300">map</span>(s {'>'} 
-           {'\n'}      <span className="text-blue-300">createMagic</span>(s)
-           {'\n'}    );
-           {'\n'}  {'}'}
+           {'\n'}  <span className="text-purple-400">passion:</span> [
+           {'\n'}    <span className="text-green-400">"Building meaningful solutions"</span>,
+           {'\n'}    <span className="text-green-400">"Learning by doing"</span>,
+           {'\n'}    <span className="text-green-400">"Creative problem-solving"</span>
+           {'\n'}  ],
+           {'\n'}  
+           {'\n'}  <span className="text-blue-400">approach:</span> <span className="text-pink-500">function</span>() {'{'}
+           {'\n'}    <span className="text-pink-500">return</span> <span className="text-green-400">"Curiosity + Purpose + Growth"</span>;
+           {'\n'}  {'}'},
+           {'\n'}  
+           {'\n'}  <span className="text-purple-400">status:</span> <span className="text-green-400">"Open to opportunities"</span>
            {'\n'}{'}'};
            <motion.span 
              animate={{ opacity: [0, 1, 0] }} 
@@ -124,37 +131,30 @@ const Hero: React.FC = () => {
     let width = canvas.width = window.innerWidth;
     let height = canvas.height = window.innerHeight;
 
-    // Grid properties
     const gridSize = 30;
     let offset = 0;
 
     const drawGrid = () => {
-        // Clear with transparent bg
         ctx.clearRect(0, 0, width, height);
         
-        // Detect theme dynamically
         const isDark = !document.documentElement.classList.contains('light-mode');
         
         ctx.strokeStyle = isDark ? '#222' : '#e5e5e5';
         ctx.lineWidth = 1;
 
-        // Moving Grid effect
         offset = (offset + 0.5) % gridSize;
 
         ctx.beginPath();
-        // Vertical lines
         for (let x = offset; x < width; x += gridSize) {
             ctx.moveTo(x, 0);
             ctx.lineTo(x, height);
         }
-        // Horizontal lines
         for (let y = offset; y < height; y += gridSize) {
             ctx.moveTo(0, y);
             ctx.lineTo(width, y);
         }
         ctx.stroke();
 
-        // Subtle gradient overlay
         const gradient = ctx.createRadialGradient(width / 2, height / 2, 0, width / 2, height / 2, width);
         if (isDark) {
             gradient.addColorStop(0, 'rgba(5, 5, 5, 0)');
@@ -183,12 +183,11 @@ const Hero: React.FC = () => {
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      // Properly cancel animation frame
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, []); // Empty deps - only run once
+  }, []);
 
   return (
     <section id="home" className="relative w-full min-h-screen flex items-center justify-center overflow-hidden border-b border-borderColor pt-20 pb-10 md:py-0 bg-background">
@@ -209,9 +208,9 @@ const Hero: React.FC = () => {
                 </div>
                 
                 <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-textPrimary leading-[0.9]">
-                    DIGITAL <br />
+                    DEOVRAT <br />
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-blue-400 to-white">
-                    REALITY
+                    SINGH
                     </span>
                 </h1>
             </motion.div>
@@ -222,7 +221,7 @@ const Hero: React.FC = () => {
                 transition={{ delay: 0.4, duration: 0.8 }}
                 className="text-textSecondary max-w-md text-lg font-light leading-relaxed border-l border-borderColor pl-6"
             >
-                Crafting robust, scalable, and pixel-perfect web experiences with modern architecture and precise interactions.
+                B.Tech student specializing in AI & ML, passionate about building meaningful web experiences. I approach development with curiosity, attention to detail, and a desire to create solutions that matter.
             </motion.p>
 
             <motion.div
@@ -246,15 +245,14 @@ const Hero: React.FC = () => {
             </motion.div>
         </div>
 
-        {/* Right Content - Code Editor Microinteraction */}
+        {/* Right Content - Code Editor */}
         <div className="relative flex justify-center lg:justify-end">
-             {/* Decorative Elements behind */}
              <div className="absolute top-10 right-10 w-64 h-64 bg-primary/20 blur-[100px] rounded-full pointer-events-none" />
              <CodeWindow />
         </div>
       </div>
       
-      {/* Scroll Indicator - Will auto-pause when out of view */}
+      {/* Scroll Indicator */}
       <div className="absolute bottom-10 left-0 w-full flex justify-center">
         <motion.div 
             animate={{ y: [0, 10, 0] }}

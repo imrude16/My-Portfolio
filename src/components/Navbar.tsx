@@ -89,7 +89,7 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, isDarkMode }) => {
               PORTFOLIO
             </button>
             <a 
-              href="https://github.com" 
+              href="https://github.com/imrude16" 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-sm font-medium hover:text-primary transition-colors flex items-center gap-2"

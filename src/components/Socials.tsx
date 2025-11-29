@@ -6,7 +6,7 @@ const socials = [
   { 
     name: 'GitHub', 
     icon: GithubIcon, 
-    link: 'https://github.com', 
+    link: 'https://github.com/imrude16', 
     // Uses CSS variable for text-primary (White in Dark, Black in Light)
     colorClass: 'group-hover:text-textPrimary',
     borderColorClass: 'group-hover:border-textPrimary'
@@ -14,7 +14,7 @@ const socials = [
   { 
     name: 'LinkedIn', 
     icon: LinkedinIcon, 
-    link: 'https://linkedin.com', 
+    link: 'https://www.linkedin.com/in/deovrat-singh-a17a31253', 
     // Official LinkedIn Blue
     colorClass: 'group-hover:text-[#0077b5]',
     borderColorClass: 'group-hover:border-[#0077b5]'
@@ -22,7 +22,7 @@ const socials = [
   { 
     name: 'X / Twitter', 
     icon: XIcon, 
-    link: 'https://twitter.com', 
+    link: 'https://x.com/Deovrat2003', 
     // Uses CSS variable (White in Dark, Black in Light)
     colorClass: 'group-hover:text-textPrimary',
     borderColorClass: 'group-hover:border-textPrimary'
@@ -30,7 +30,7 @@ const socials = [
   { 
     name: 'Discord', 
     icon: DiscordIcon, 
-    link: 'https://discord.com', 
+    link: 'https://discord.com/users/571316433393287188', 
     // Official Discord Blurple
     colorClass: 'group-hover:text-[#5865F2]',
     borderColorClass: 'group-hover:border-[#5865F2]'

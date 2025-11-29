@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import type { Variants } from 'motion/react';   // ✅ FIX: Add this
+import type { Variants } from 'motion/react';
 import { Award, ExternalLink } from 'lucide-react';
 
 interface Certification {
@@ -15,31 +15,30 @@ interface Certification {
 const certifications: Certification[] = [
   {
     id: 1,
-    title: "Meta Frontend Developer",
-    issuer: "Meta",
-    date: "2023",
-    link: "https://coursera.org",
-    skills: ["React", "UX/UI", "JavaScript"]
+    title: "React & Modern JavaScript",
+    issuer: "Online Learning Platform",
+    date: "2024",
+    link: "#",
+    skills: ["React.js", "ES6+", "Hooks"]
   },
   {
     id: 2,
-    title: "AWS Certified Cloud Practitioner",
-    issuer: "Amazon Web Services",
+    title: "Full Stack Web Development",
+    issuer: "Self-Paced Course",
     date: "2023",
-    link: "https://aws.amazon.com",
-    skills: ["Cloud Security", "AWS Core Services"]
+    link: "#",
+    skills: ["Node.js", "Express", "MongoDB"]
   },
   {
     id: 3,
-    title: "Full Stack Web Development",
-    issuer: "Udemy / Angela Yu",
-    date: "2022",
-    link: "https://udemy.com",
-    skills: ["Node.js", "Express", "MongoDB"]
+    title: "TypeScript Fundamentals",
+    issuer: "Developer Community",
+    date: "2024",
+    link: "#",
+    skills: ["TypeScript", "Type Safety", "Modern JS"]
   }
 ];
 
-// --- FIXED Animation Variants ---
 const cardVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: (i: number) => ({
@@ -53,7 +52,6 @@ const cardVariants: Variants = {
   }),
 };
 
-// --- Certification Card Component ---
 interface CertificationCardProps {
   cert: Certification;
   index: number;
@@ -68,12 +66,11 @@ const CertificationCard = React.memo<CertificationCardProps>(({ cert, index }) =
       custom={index}
       initial="hidden"
       whileInView="visible"
-      variants={cardVariants}   // ✅ Now valid
+      variants={cardVariants}
       viewport={{ once: true, margin: "-50px" }}
       className="group relative bg-surface border border-borderColor p-6 flex flex-col justify-between hover:border-primary transition-all duration-300 min-h-[220px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
       aria-label={`View ${cert.title} certification from ${cert.issuer}`}
     >
-      {/* Hover Glow Effect */}
       <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
       
       <div className="relative z-10">
@@ -110,7 +107,6 @@ const CertificationCard = React.memo<CertificationCardProps>(({ cert, index }) =
         </div>
       </div>
 
-      {/* Decorative Corners */}
       <span className="absolute top-0 right-0 w-3 h-3 border-t border-r border-transparent group-hover:border-primary transition-all duration-300" />
       <span className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-transparent group-hover:border-primary transition-all duration-300" />
     </motion.a>
@@ -119,7 +115,6 @@ const CertificationCard = React.memo<CertificationCardProps>(({ cert, index }) =
 
 CertificationCard.displayName = 'CertificationCard';
 
-// --- Main Component ---
 const Certifications: React.FC = () => {
   return (
     <section
@@ -128,7 +123,6 @@ const Certifications: React.FC = () => {
     >
       <div className="max-w-7xl mx-auto px-6">
         
-        {/* Header */}
         <div className="flex items-end justify-between mb-12">
           <div className="border-l-2 border-primary pl-4">
             <h2
@@ -138,7 +132,7 @@ const Certifications: React.FC = () => {
               CERTIFICATIONS
             </h2>
             <p className="text-textSecondary font-mono text-sm mt-1">
-              VALIDATIONS & AWARDS
+              CONTINUOUS LEARNING
             </p>
           </div>
           <div
@@ -147,7 +141,6 @@ const Certifications: React.FC = () => {
           />
         </div>
 
-        {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {certifications.map((cert, i) => (
             <CertificationCard key={cert.id} cert={cert} index={i} />

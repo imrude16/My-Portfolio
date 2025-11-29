@@ -6,47 +6,46 @@ import type { Project } from '../types';
 const projects: Project[] = [
   {
     id: '1',
-    title: 'Nebula Dashboard',
-    description: 'Real-time analytics platform for distributed systems.',
-    fullDescription: 'Nebula Dashboard provides comprehensive visualization for microservice architectures. It aggregates logs, metrics, and traces into a unified interface, allowing developers to debug issues 50% faster. Built with React flow for topology mapping and WebSockets for real-time data streaming.',
+    title: 'Signalist - AI Trading Platform',
+    description: 'AI-driven trading platform delivering personalized investment recommendations.',
+    fullDescription: 'A full-stack trading platform that automates daily market summaries and provides AI-generated insights to help investors make informed decisions. Features include personalized recommendations based on market data and user preferences, automated scheduling for market updates, and real-time email alerts.',
     videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-    techStack: ['React', 'D3.js', 'Node.js', 'Socket.io'],
-    liveLink: 'https://example.com',
-    githubLink: 'https://github.com'
+    techStack: ['Next.js', 'MongoDB', 'TailwindCSS', 'Gemini API'],
+    liveLink: 'https://siggnalist.vercel.app/',
+    githubLink: 'https://github.com/imrude16/trading-app'
   },
   {
     id: '2',
-    title: 'E-Commerce Zenith',
-    description: 'Headless commerce solution with AI recommendations.',
-    fullDescription: 'A highly scalable headless e-commerce storefront. Features include AI-driven product recommendations, optimistic UI updates for cart management, and sub-second page loads via edge caching. Integrated with Stripe for payments and Sanity CMS for content management.',
+    title: 'AI Chat App',
+    description: 'Context-aware chat application with persistent memory and real-time messaging.',
+    fullDescription: 'An AI-powered chat application enabling task-specific conversations with persistent memory and user session management. Features include secure user authentication, real-time message synchronization, dynamic AI controls, and integration with OpenAI and Gemini APIs for intelligent responses. Built with modern animation and responsive design.',
     videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-    techStack: ['Next.js', 'TypeScript', 'Tailwind', 'Stripe'],
-    liveLink: 'https://example.com',
-    githubLink: 'https://github.com'
+    techStack: ['React 19', 'TypeScript', 'Framer Motion', 'OpenAI API'],
+    liveLink: 'https://github.com/imrude16/ai-chat-app',
+    githubLink: 'https://github.com/imrude16/ai-chat-app'
   },
   {
     id: '3',
-    title: 'Crypto Tracker',
-    description: 'DeFi portfolio management tool with blockchain indexing.',
-    fullDescription: 'Connects multiple wallets to track assets across various chains. Uses a custom indexer to parse blockchain events and provide historical price data. Features a dark-mode first UI with complex data visualization charts.',
+    title: 'AI Resume Analyzer',
+    description: 'ATS optimization platform with real-time insights and keyword matching.',
+    fullDescription: 'A platform that helps job seekers optimize their resumes for ATS systems by providing real-time insights, keyword matching, and scoring against job requirements. Features include PDF text extraction, AI-powered analysis with ATS scoring, interactive charts, and seamless file uploads with cloud integration.',
     videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
-    techStack: ['React', 'Web3.js', 'Express', 'PostgreSQL'],
-    liveLink: 'https://example.com',
-    githubLink: 'https://github.com'
+    techStack: ['React', 'TypeScript', 'Zustand', 'Puter.js'],
+    liveLink: 'https://resumiind.vercel.app/',
+    githubLink: 'https://github.com/imrude16/ai-resume-analyzer'
   },
   {
     id: '4',
-    title: 'TaskFlow',
-    description: 'Collaborative project management tool for remote teams.',
-    fullDescription: 'TaskFlow simplifies remote collaboration with real-time kanban boards, chat integration, and file sharing. Includes automated workflow triggers and integration with Slack and Discord.',
+    title: '3D Portfolio',
+    description: 'Fully responsive portfolio with 3D visuals and smooth animations.',
+    fullDescription: 'A modern portfolio website built with clean UI principles and smooth motion animations. Features include dynamic navigation, showcase sections, experience display, tech stack visualization, and integrated email functionality. Includes 3D visuals using React Three Fiber and GLB models for enhanced visual appeal.',
     videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-    techStack: ['Vue.js', 'Firebase', 'Tailwind'],
-    liveLink: 'https://example.com',
-    githubLink: 'https://github.com'
+    techStack: ['React', 'Tailwind CSS', 'React Three Fiber', 'EmailJS'],
+    liveLink: 'https://myfolio-dev.vercel.app/',
+    githubLink: 'https://github.com/imrude16/3d-portfolio-using-react'
   }
 ];
 
-// --- Optimized Video Card Component ---
 interface ProjectCardProps {
   project: Project;
   onClick: () => void;
@@ -89,7 +88,6 @@ const ProjectCard = React.memo<ProjectCardProps>(({ project, onClick }) => {
       transition={{ duration: 0.3 }}
       onClick={onClick}
     >
-      {/* Video Background with Error Handling */}
       {!videoError ? (
         <video
           ref={videoRef}
@@ -109,7 +107,6 @@ const ProjectCard = React.memo<ProjectCardProps>(({ project, onClick }) => {
       
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
       
-      {/* Content Overlay */}
       <div className="absolute bottom-0 left-0 w-full p-6">
         <div className="flex gap-2 mb-3">
           {project.techStack.slice(0, 3).map(tech => (
@@ -135,13 +132,11 @@ const ProjectCard = React.memo<ProjectCardProps>(({ project, onClick }) => {
 
 ProjectCard.displayName = 'ProjectCard';
 
-// --- Main Projects Component ---
 const Projects: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [dragWidth, setDragWidth] = useState(0);
 
-  // Optimized width calculation with ResizeObserver
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -160,7 +155,6 @@ const Projects: React.FC = () => {
     return () => resizeObserver.disconnect();
   }, []);
 
-  // Optimized modal handlers
   const openModal = useCallback((project: Project) => {
     setSelectedProject(project);
     document.body.style.overflow = 'hidden';
@@ -171,7 +165,6 @@ const Projects: React.FC = () => {
     document.body.style.overflow = 'unset';
   }, []);
 
-  // Cleanup on unmount
   useEffect(() => {
     return () => {
       document.body.style.overflow = 'unset';
@@ -208,7 +201,6 @@ const Projects: React.FC = () => {
         </motion.div>
       </motion.div>
 
-      {/* Optimized Modal */}
       <AnimatePresence>
         {selectedProject && (
           <motion.div
