@@ -72,7 +72,7 @@ const cardVariants: Variants = {
 
 const Experience: React.FC = () => {
   return (
-    <section className="w-full py-20 bg-background border-t border-borderColor">
+    <section id="experience" className="w-full py-20 bg-background border-t border-borderColor">
       <div className="max-w-7xl mx-auto px-6">
 
         <div className="flex items-end justify-between mb-12">

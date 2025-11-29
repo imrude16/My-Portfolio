@@ -86,7 +86,13 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, isDarkMode }) => {
               onClick={() => scrollToSection('home')}
               className="text-sm font-medium hover:text-primary transition-colors"
             >
-              PORTFOLIO
+              PROFILE
+            </button>
+            <button 
+              onClick={() => scrollToSection('experience')}
+              className="text-sm font-medium hover:text-primary transition-colors"
+            >
+              EXPERIENCES
             </button>
             <a 
               href="https://github.com/imrude16" 
@@ -97,12 +103,6 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, isDarkMode }) => {
             >
               GITHUB <Github size={14} />
             </a>
-            <button 
-              onClick={() => scrollToSection('contact')}
-              className="text-sm font-medium hover:text-primary transition-colors"
-            >
-              CONTACTS
-            </button>
             
             <div className="w-px h-4 bg-borderColor"></div>
 
@@ -159,7 +159,13 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, isDarkMode }) => {
               onClick={() => scrollToSection('home')}
               className="text-2xl font-bold hover:text-primary transition-colors"
             >
-              PORTFOLIO
+              PROFILE
+            </button>
+            <button 
+              onClick={() => scrollToSection('experience')}
+              className="text-2xl font-bold hover:text-primary transition-colors"
+            >
+              EXPERIENCES
             </button>
             <a 
               href="https://github.com" 
@@ -170,12 +176,6 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, isDarkMode }) => {
             >
               GITHUB <Github size={24} />
             </a>
-            <button 
-              onClick={() => scrollToSection('contact')}
-              className="text-2xl font-bold hover:text-primary transition-colors"
-            >
-              CONTACTS
-            </button>
           </motion.div>
         )}
       </AnimatePresence>

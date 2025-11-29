@@ -10,7 +10,7 @@ const projects: Project[] = [
     description: 'AI-driven trading platform delivering personalized investment recommendations.',
     fullDescription: 'A full-stack trading platform that automates daily market summaries and provides AI-generated insights to help investors make informed decisions. Features include personalized recommendations based on market data and user preferences, automated scheduling for market updates, and real-time email alerts.',
     videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-    techStack: ['Next.js', 'MongoDB', 'TailwindCSS', 'Gemini API'],
+    techStack: ['Next.js', 'MongoDB', 'TailwindCSS', 'Gemini'],
     liveLink: 'https://siggnalist.vercel.app/',
     githubLink: 'https://github.com/imrude16/trading-app'
   },
@@ -20,7 +20,7 @@ const projects: Project[] = [
     description: 'Context-aware chat application with persistent memory and real-time messaging.',
     fullDescription: 'An AI-powered chat application enabling task-specific conversations with persistent memory and user session management. Features include secure user authentication, real-time message synchronization, dynamic AI controls, and integration with OpenAI and Gemini APIs for intelligent responses. Built with modern animation and responsive design.',
     videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-    techStack: ['React 19', 'TypeScript', 'Framer Motion', 'OpenAI API'],
+    techStack: ['React', 'TypeScript', 'Motion', 'OpenAI'],
     liveLink: 'https://github.com/imrude16/ai-chat-app',
     githubLink: 'https://github.com/imrude16/ai-chat-app'
   },
